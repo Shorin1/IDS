@@ -8,6 +8,11 @@ namespace IDS.Distributions.Continuous
         private double _mu;
         private Random _rand;
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="alpha">Мат ожидание</param>
+        /// <param name="mu">Дисперсия</param>
         public LaplaceDistribution(double alpha, double mu)
         {
             _alpha = alpha;
