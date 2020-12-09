@@ -1,6 +1,8 @@
-﻿using IDS.Generators.Discrete;
+﻿using IDS.Distributions.Continuous;
+using IDS.Generators.Discrete;
 using System;
 using System.IO;
+using System.Numerics;
 
 namespace IDS
 {
@@ -8,11 +10,14 @@ namespace IDS
     {
         static void Main(string[] args)
         {
+            Console.WriteLine("Введите количество итераций");
+            int n = int.Parse(Console.ReadLine());
+
+            Console.WriteLine("Интервал записи в файл");
+            int interval = int.Parse(Console.ReadLine());
+
             Console.WriteLine("Введите вероятность p: ");
             var p = double.Parse(Console.ReadLine());
-
-            Console.WriteLine("Введите n ");
-            int n = int.Parse(Console.ReadLine());
             var bernoulliDist = new BernoulliDistribution(p);
 
             string fileName = "BernoulliDist.txt";
@@ -30,28 +35,38 @@ namespace IDS
                         count++;
                     }
 
-                    if (i % 10 == 0)
+                    if (i % interval == 0)
                     {
                         sw.WriteLine($"{i} {count / i};");
                     }
                 }
             }
 
-            //Console.WriteLine("Bernoulli dist");
-            //Console.WriteLine($"Total: 1000000, Count: {count}, Count/Total: {count / 1000000}");
+            Console.WriteLine("--- Bernoulli dist ---");
+            Console.WriteLine($"Total: 1000000, Count: {count}, Count/Total: {(double)count / n}");
 
-            //var mu = 0.5;
-            //var laplaceDist = new LaplaceDistribution(alpha, mu);
-            //var bigInteger = new BigInteger();
+            Console.WriteLine("Введите дисперсию: ");
+            var mu = double.Parse(Console.ReadLine());
 
-            //for (int i = 0; i < 1000000; i++)
-            //{
-            //    var laplaceVarible = laplaceDist.NextDouble();
-            //    bigInteger += (int)laplaceVarible;
-            //}
+            fileName = "LaplaceDist.txt";
+            var bigInteger = new BigInteger();
 
-            //Console.WriteLine("Laplace dist");
-            //Console.WriteLine($"Total: 1000000, Count: {bigInteger}, Count/Total: {(double)bigInteger / 1000000.0}");
+            using (var sw = new StreamWriter(fileName))
+            {
+                var laplaceDist = new LaplaceDistribution(p, mu);
+
+                for (int i = 0; i < n; i++)
+                {
+                    var laplaceVarible = laplaceDist.NextDouble();
+                    
+                    if (i % interval == 0)
+                    {
+                        sw.WriteLine($"{i} {laplaceVarible}");
+                    }
+                }
+            }
+
+            Console.WriteLine("--- Laplace dist ---");
         }
     }
 }

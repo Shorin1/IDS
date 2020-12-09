@@ -15,7 +15,6 @@ namespace IDS.Generators.Discrete
         {
             _alpha = alpha;
             _ran = new Random();
-            Console.WriteLine("Test");
         }
 
         public int Next()
