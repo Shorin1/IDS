@@ -20,7 +20,7 @@ namespace IDS
             var p = double.Parse(Console.ReadLine());
             var bernoulliDist = new BernoulliDistribution(p);
 
-            string fileName = "BernoulliDist.txtdad";
+            string fileName = "BernoulliDist.txtd";
 
             int count = 0;
 
